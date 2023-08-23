@@ -9,6 +9,7 @@ public class ActionRoguelikeTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "ActionRoguelike" } );
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_2;
+		ExtraModuleNames.Add("ActionRoguelike");
 	}
 }

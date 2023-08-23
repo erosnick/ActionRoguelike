@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{551C828D-4192-492F-F8ED-42B9B8A89D97}",
+	"EngineAssociation": "{72C89203-48DE-1824-427A-1E805DB62A79}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -19,6 +19,14 @@
 			"Enabled": true,
 			"TargetAllowList": [
 				"Editor"
+			]
+		},
+		{
+			"Name": "VisualStudioTools",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/362651520df94e4fa65492dbcba44ae2",
+			"SupportedTargetPlatforms": [
+				"Win64"
 			]
 		}
 	]
