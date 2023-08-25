@@ -24,6 +24,46 @@ void UARSkillComponent::PrimaryAttack()
 		return;
 	}
 
+	PlayAnimation(FireAnimation);
+
+	if (GetWorld()->GetTimerManager().IsTimerActive(PrimaryAttackTimerHandler))
+	{
+		return;
+	}
+
+	GetWorld()->GetTimerManager().SetTimer(PrimaryAttackTimerHandler,
+	[&] ()
+	{
+		SpawnProjectile();
+
+		// Try and play the sound if specified
+		if (FireSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, FireSound, Character->GetActorLocation());
+		}
+
+		GetWorld()->GetTimerManager().ClearTimer(PrimaryAttackTimerHandler);
+	}, 
+	1.0f, false, false);
+}
+
+
+void UARSkillComponent::PlayAnimation(UAnimMontage* InAnimation)
+{
+	// Try and play a firing animation if specified
+	if (InAnimation != nullptr)
+	{
+		// Get the animation object for the arms mesh
+		UAnimInstance* AnimInstance = Character->GetMesh()->GetAnimInstance();
+		if (AnimInstance != nullptr)
+		{
+			AnimInstance->Montage_Play(InAnimation, 1.0f);
+		}
+	}
+}
+
+void UARSkillComponent::SpawnProjectile()
+{
 	// Try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{
@@ -33,7 +73,9 @@ void UARSkillComponent::PrimaryAttack()
 			APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
 			FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 
-			Character->GetActorForwardVector();
+			auto ForwardVector = Character->GetActorForwardVector();
+
+			SpawnRotation = FRotationMatrix::MakeFromX(ForwardVector).Rotator();
 
 			SpawnRotation.Pitch = 0.0f;
 
@@ -44,28 +86,11 @@ void UARSkillComponent::PrimaryAttack()
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			ActorSpawnParams.Instigator = Character;
 
 			// Spawn the projectile at the muzzle
 			World->SpawnActor<AARMagicProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-		}
-	}
-
-	// Try and play the sound if specified
-	if (FireSound != nullptr)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, FireSound, Character->GetActorLocation());
-	}
-
-	// Try and play a firing animation if specified
-	if (FireAnimation != nullptr)
-	{
-		// Get the animation object for the arms mesh
-		UAnimInstance* AnimInstance = Character->GetMesh()->GetAnimInstance();
-		if (AnimInstance != nullptr)
-		{
-			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
 }

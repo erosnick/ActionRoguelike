@@ -46,6 +46,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void PrimaryAttack();
 
+	void PlayAnimation(UAnimMontage* InAnimation);
+
+	void SpawnProjectile();
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerFire();
 
@@ -57,4 +61,6 @@ protected:
 private:
 	/** The Character holding this weapon*/
 	class AARCharacter* Character;
+
+	FTimerHandle PrimaryAttackTimerHandler;
 };
