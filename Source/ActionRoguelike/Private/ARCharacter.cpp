@@ -9,6 +9,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Net/UnrealNetwork.h"
 #include "ARInteractionComponent.h"
+#include "ARAttributesComponent.h"
 
 // Sets default values
 AARCharacter::AARCharacter()
@@ -24,6 +25,8 @@ AARCharacter::AARCharacter()
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	InteractionComponent = CreateDefaultSubobject<UARInteractionComponent>("InteractionComponent");
+
+	AttributesComponent = CreateDefaultSubobject<UARAttributesComponent>("AttributesComponent");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	

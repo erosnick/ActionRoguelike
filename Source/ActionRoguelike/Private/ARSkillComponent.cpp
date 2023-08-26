@@ -65,7 +65,7 @@ void UARSkillComponent::PlayAnimation(UAnimMontage* InAnimation)
 void UARSkillComponent::SpawnProjectile()
 {
 	// Try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (ensure(ProjectileClass))
 	{
 		UWorld* const World = GetWorld();
 		if (World != nullptr)

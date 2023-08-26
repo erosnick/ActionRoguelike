@@ -20,14 +20,18 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	class USpringArmComponent* SpringArmComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	class UCameraComponent* CameraComponent;
+	TObjectPtr<class UCameraComponent> CameraComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	class UARInteractionComponent* InteractionComponent;
+	TObjectPtr<class UARInteractionComponent> InteractionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Components, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UARAttributesComponent> AttributesComponent;
 
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))

@@ -4,6 +4,7 @@
 #include "ExplosiveBarrel.h"
 #include "Components/StaticMeshComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 AExplosiveBarrel::AExplosiveBarrel()
@@ -42,7 +43,10 @@ void AExplosiveBarrel::OnExplode(UPrimitiveComponent* HitComponent, AActor* Othe
 {
 	RadialForce->FireImpulse();
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "BOOM!!!");
+	//FString CombinedString = FString::Printf(TEXT("OtherActor: %s, at game time %f"), *GetNameSafe(OtherActor), GetWorld()->TimeSeconds);
+	FString CombinedString = FString::Printf(TEXT("Hit at location: %s"), *Hit.ImpactPoint.ToString());
+
+	DrawDebugString(GetWorld(), Hit.ImpactPoint, CombinedString, nullptr, FColor::Green, 2.0f, true);
 }
 
 // Called every frame

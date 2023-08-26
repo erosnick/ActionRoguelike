@@ -4,35 +4,31 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ARGameplayInterface.h"
-#include "ARItemChest.generated.h"
+#include "ARTarget.generated.h"
 
 UCLASS()
-class ACTIONROGUELIKE_API AARItemChest : public AActor, public IARGameplayInterface
+class ACTIONROGUELIKE_API AARTarget : public AActor
 {
 	GENERATED_BODY()
-
-	void Interact_Implementation(APawn* InstigatorPawn);
 	
 public:	
 	// Sets default values for this actor's properties
-	AARItemChest();
+	AARTarget();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, Category = Components)
-	TObjectPtr<class UStaticMeshComponent> BaseMesh;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
-	TObjectPtr<class UStaticMeshComponent> LidMesh;
+	TObjectPtr<class UARAttributesComponent> AttributesComponent;
 
-	UPROPERTY(EditAnywhere)
-	float TargetPitch;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	TObjectPtr<class UStaticMeshComponent> Mesh;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnHealthChange(AActor* InstigatorActor, UARAttributesComponent* OwningComponent, float NowHealth, float MaxHealth, float Delta);
 };

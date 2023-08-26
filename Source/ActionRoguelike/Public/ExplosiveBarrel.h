@@ -25,10 +25,10 @@ protected:
 	void OnExplode(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	class UStaticMeshComponent* Mesh;
+	TObjectPtr<class UStaticMeshComponent> Mesh;
 
-	UPROPERTY(VisibleAnywhere, Category = Components)
-	class URadialForceComponent* RadialForce;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+	TObjectPtr<class URadialForceComponent> RadialForce;
 
 public:	
 	// Called every frame

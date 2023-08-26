@@ -20,16 +20,21 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USphereComponent* SphereComponent;
+	TObjectPtr<class USphereComponent> SphereComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	class UProjectileMovementComponent* MovementComponent;
+	TObjectPtr<class UProjectileMovementComponent> MovementComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	UParticleSystemComponent* EffectComponent;
+	TObjectPtr<UParticleSystemComponent> EffectComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Attributes)
+	float Damage;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
